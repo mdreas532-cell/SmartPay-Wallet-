@@ -4050,13 +4050,12 @@
                 referralMessageElement.textContent = referralSettings.referralShareMessage || 'আপনার বন্ধুকে আমন্ত্রণ করুন এবং প্রতি রেফারে ইনকাম করুন 50 টাকা';
             }
 
-            // Update referral link (if we have userData)
+            // Update referral link – now only baseUrl, no appended ID
             if (userData && userData.referralId) {
-                const baseUrl = referralSettings.baseUrl || 'https://smartpay.vercel.app/?ref=';
-                const referralLink = `${baseUrl}${userData.referralId}`;
+                const baseUrl = referralSettings.baseUrl || 'https://smartpay-wallet24.vercel.app/';
                 const referralLinkInput = document.getElementById('referral-link');
                 if (referralLinkInput) {
-                    referralLinkInput.value = referralLink;
+                    referralLinkInput.value = baseUrl; // ← only baseUrl, no ?ref=
                 }
             }
 
@@ -4457,11 +4456,10 @@
                 document.getElementById('referral-id-display').textContent = data.referralId;
                 document.getElementById('referral-id').value = data.referralId;
                 
-                // ✅ UPDATE REFERRAL LINK WITH REFERRAL SETTINGS
+                // ✅ UPDATE REFERRAL LINK WITH REFERRAL SETTINGS – now only baseUrl
                 if (referralSettings) {
-                    const baseUrl = referralSettings.baseUrl || 'https://smartpay.vercel.app/?ref=';
-                    const referralLink = `${baseUrl}${data.referralId}`;
-                    document.getElementById('referral-link').value = referralLink;
+                    const baseUrl = referralSettings.baseUrl || 'https://smartpay-wallet24.vercel.app/';
+                    document.getElementById('referral-link').value = baseUrl; // ← only baseUrl
                 }
             }
             
@@ -4738,11 +4736,10 @@
                     setupGmailListeners();
                     setupSupportContactsListener();
                     
-                    // ✅ UPDATE REFERRAL LINK WITH REFERRAL SETTINGS
+                    // ✅ UPDATE REFERRAL LINK WITH REFERRAL SETTINGS – now only baseUrl
                     if (referralSettings && userData.referralId) {
-                        const baseUrl = referralSettings.baseUrl || 'https://smartpay.vercel.app/?ref=';
-                        const referralLink = `${baseUrl}${userData.referralId}`;
-                        document.getElementById('referral-link').value = referralLink;
+                        const baseUrl = referralSettings.baseUrl || 'https://smartpay-wallet24.vercel.app/';
+                        document.getElementById('referral-link').value = baseUrl;
                     }
                     
                     // ✅ Setup referral requests listener for this user (as referrer)
@@ -7597,6 +7594,7 @@
             console.log('✅ PROBLEM #10 FIXED: Withdraw status logic corrected (totalWithdraw only on approved, refund on reject)');
             console.log('✅ PROBLEM #12 FIXED: Approved earnings sync into wallets (Referral, Free Job, Gmail)');
             console.log('✅ PROBLEM #3 FIXED: Salary packages unlock & claim system now working (one-time claim, wallet updates)');
+            console.log('✅ REFERRAL SYSTEM UPDATED: Link now shows only baseUrl, no auto-fill from URL');
 
             // Add event listener for wallet dropdown
             const walletSelect = document.getElementById('withdraw-wallet-select');
@@ -7608,35 +7606,10 @@
         });
 
         // =======================================================
-        // ✅ REFERRAL AUTO SIGNUP SYSTEM (Problem #13 Fix)
+        // ❌ Auto referral code from URL REMOVED (as per instructions)
         // =======================================================
-
-        window.addEventListener("load", function () {
-            // Step 1: Get referral code from URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const referralCodeFromLink = urlParams.get("ref");
-
-            console.log("Referral Code Detected:", referralCodeFromLink);
-
-            // Step 2: If referral code exists → Open Signup Page Automatically
-            if (referralCodeFromLink && referralCodeFromLink.trim() !== "") {
-                console.log("Opening Signup Page Automatically...");
-                
-                // Use existing showSignUp function
-                showSignUp();
-
-                // Step 3: Auto Fill Referral Code Field
-                setTimeout(() => {
-                    const referralInput = document.getElementById("signup-referral");
-                    if (referralInput) {
-                        referralInput.value = referralCodeFromLink.trim();
-                        // Prevent user from editing referral code
-                        referralInput.readOnly = true;
-                        console.log("Referral Code Auto Filled Successfully!");
-                    }
-                }, 400);
-            }
-        });
+        // The code that previously read the 'ref' parameter and auto-filled
+        // the signup form has been completely removed.
     </script>
 </body>
 </html>
