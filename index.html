@@ -1097,7 +1097,18 @@
         .sidebar-menu { 
             overflow-y: auto; 
             flex: 1; 
-            padding: 20px 15px; 
+            padding: 10px 15px; 
+        }
+        /* Sidebar section title */
+        .sidebar-section-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #94a3b8;
+            padding: 16px 0 6px 10px;
+            margin: 10px 0 4px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         .menu-item {
             display: flex; 
@@ -3857,7 +3868,7 @@
             </div>
         </div>
 
-        <!-- SIDEBAR MENU -->
+        <!-- SIDEBAR MENU (UPDATED WITH SECTIONED STRUCTURE) -->
         <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMenu()"></div>
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
@@ -3872,42 +3883,64 @@
             </div>
 
             <div class="sidebar-menu">
+                <!-- Ref ID Display -->
                 <div class="menu-item" style="background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(37, 99, 235, 0.3);">
                     <i class="fa-solid fa-link"></i> 
                     <div style="font-size: 13px;">Ref ID: <strong style="color: white;" id="sidebar-ref-id">Loading...</strong></div>
                 </div>
-                
+
+                <!-- SECTION: My Account -->
+                <div class="sidebar-section-title">My Account</div>
                 <div class="menu-item" onclick="navigateTo('dashboard')">
                     <i class="fa-solid fa-gauge"></i> Dashboard
                 </div>
                 <div class="menu-item" onclick="navigateTo('profile')">
                     <i class="fa-solid fa-user"></i> Profile
                 </div>
-                <div class="menu-item" onclick="navigateTo('help-line')">
-                    <i class="fa-solid fa-headset"></i> Help Line
-                </div>
-                <div class="menu-item" onclick="navigateTo('withdraw')">
-                    <i class="fa-solid fa-money-bill-transfer"></i> Withdraw
-                </div>
-                <div class="menu-item" onclick="navigateTo('gmail-sell')">
-                    <i class="fa-brands fa-google"></i> Gmail Sell
-                </div>
-                <div class="menu-item" id="referral-menu-item" onclick="navigateTo('referral-system')">
+
+                <!-- SECTION: Referral Program -->
+                <div class="sidebar-section-title">Referral Program</div>
+                <div class="menu-item" onclick="navigateTo('referral-system')">
                     <i class="fa-solid fa-link"></i> Referral System
                 </div>
-                <div class="menu-item" onclick="navigateTo('salary-apply')">
-                    <i class="fa-solid fa-wallet"></i> Salary
-                </div>
-                <!-- ===== FREE JOB SIDEBAR MENU ITEM ===== -->
+
+                <!-- SECTION: Free Income -->
+                <div class="sidebar-section-title">Free Income</div>
                 <div class="menu-item" onclick="navigateTo('free-job-projects')">
                     <i class="fa-solid fa-briefcase"></i> Free Job
                 </div>
-                <!-- ===== JOB SUBMISSIONS SIDEBAR MENU ITEM ===== -->
                 <div class="menu-item" onclick="navigateTo('job-submissions')">
                     <i class="fa-solid fa-clipboard-list"></i> Job Submissions
                 </div>
-                
-                <div style="margin-top: 30px; border-top: 2px solid rgba(255, 255, 255, 0.1); padding-top: 20px;">
+
+                <!-- SECTION: Salary & Rewards -->
+                <div class="sidebar-section-title">Salary & Rewards</div>
+                <div class="menu-item" onclick="navigateTo('salary-apply')">
+                    <i class="fa-solid fa-wallet"></i> Salary
+                </div>
+                <!-- Future: Bonus, Salary History etc. -->
+
+                <!-- SECTION: Wallet & Withdraw -->
+                <div class="sidebar-section-title">Wallet & Withdraw</div>
+                <div class="menu-item" onclick="navigateTo('withdraw')">
+                    <i class="fa-solid fa-money-bill-transfer"></i> Withdraw
+                </div>
+
+                <!-- SECTION: Digital Selling -->
+                <div class="sidebar-section-title">Digital Selling</div>
+                <div class="menu-item" onclick="navigateTo('gmail-sell')">
+                    <i class="fa-brands fa-google"></i> Gmail Sell
+                </div>
+                <!-- Future: Facebook Sell, etc. -->
+
+                <!-- SECTION: Support & Help -->
+                <div class="sidebar-section-title">Support & Help</div>
+                <div class="menu-item" onclick="navigateTo('help-line')">
+                    <i class="fa-solid fa-headset"></i> Help Line
+                </div>
+
+                <!-- Divider and Logout (no section title) -->
+                <div style="margin-top: 20px; border-top: 2px solid rgba(255, 255, 255, 0.1); padding-top: 20px;">
                     <div class="menu-item" onclick="logout()">
                         <i class="fa-solid fa-right-from-bracket"></i> Logout
                     </div>
@@ -6104,7 +6137,11 @@
                 return;
             }
             
-            const message = 'Join SmartPay using my referral link!';
+            const message = '💰 ঘরে বসেই শুরু করুন স্মার্ট ইনকামের নতুন যাত্রা!
+SmartPay দিচ্ছে দ্রুত পেমেন্ট ⚡
+সম্পূর্ণ নিরাপদ ওয়ালেট সিস্টেম 🔐
+এবং দারুণ সব সুযোগ–সুবিধা 🎁
+আজই আমার রেফারেল লিংক দিয়ে যুক্ত হয়ে উপভোগ করুন ডিজিটাল আয়ের নতুন অভিজ্ঞতা 👇';
             const textToCopy = `${message}\n\n${link}`;
             copyText(textToCopy);
         }
