@@ -4658,7 +4658,7 @@
                 } else if (error.code === 'auth/weak-password') {
                     errorText.textContent = 'পাসওয়ার্ড খুব দুর্বল। শক্তিশালী পাসওয়ার্ড দিন।';
                 } else {
-                    errorText.textContent = 'অ্যাকাউন্ট তৈরি করতে সমস্যা হয়েছে: ' + error.message;
+                    errorText.textContent = 'একাধিক অ্যাকাউন্ট তৈরি করা যাবে না! একটি ডিভাইসি একটি অ্যাকাউন্ট তৈরি করা যাবে।: ' + error.message;
                 }
             } finally {
                 btn.innerHTML = originalBtnText;
