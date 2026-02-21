@@ -354,8 +354,7 @@
             border-radius: 0;
             position: relative;
             box-shadow: none;
-            overflow-x: hidden;
-            overflow-y: auto;
+            overflow: hidden;
             transition: var(--transition);
             margin: 0;
             display: none;
@@ -3890,21 +3889,12 @@
         </div>
 
         <!-- Spin -->
-        <div id="spin-view" class="page-view">
-    <div class="page-header">
-        <div class="back-btn" onclick="navigateTo('dashboard')">
-            <i class="fa-solid fa-arrow-left"></i>
-        </div>
-        <div class="page-title">Spin</div>
-    </div>
-
-    <!-- Coming Soon Removed -->
-    <div style="width:100%; height:calc(100vh - 70px);">
-        <iframe 
-            src="https://spin-smartpay.vercel.app" 
-            style="width:100%; height:100%; border:none;">
-        </iframe>
-    </div>
+        <div style="position:fixed; top:70px; left:0; right:0; bottom:0;">
+    <iframe 
+        src="https://spin-smartpay.vercel.app"
+        style="width:100%; height:100%; border:none; -webkit-overflow-scrolling: touch;"
+        scrolling="yes">
+    </iframe>
 </div>
 
         <!-- SIDEBAR MENU -->
