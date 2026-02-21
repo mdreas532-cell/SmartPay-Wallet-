@@ -1097,7 +1097,18 @@
         .sidebar-menu { 
             overflow-y: auto; 
             flex: 1; 
-            padding: 20px 15px; 
+            padding: 10px 15px; 
+        }
+        /* Sidebar section title */
+        .sidebar-section-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #94a3b8;
+            padding: 16px 0 6px 10px;
+            margin: 10px 0 4px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         .menu-item {
             display: flex; 
@@ -1842,7 +1853,6 @@
         .task-card,
         .generation-card,
         .salary-package-card,
-        .support-card,
         .podium-card,
         .leaderboard-row {
             background: var(--white);
@@ -1858,7 +1868,6 @@
         .task-card:hover,
         .generation-card:hover,
         .salary-package-card:hover,
-        .support-card:hover,
         .podium-card:hover,
         .leaderboard-row:hover {
             transform: translateY(-3px);
@@ -2016,66 +2025,6 @@
             color: var(--dark);
             min-width: 50px;
             text-align: right;
-        }
-
-        /* Support Card Compact */
-        .support-card {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--light-2);
-            text-align: center;
-        }
-        
-        .support-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 15px;
-            color: white;
-            font-size: 20px;
-        }
-        
-        .support-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 8px;
-        }
-        
-        .support-desc {
-            font-size: 13px;
-            color: var(--text-light);
-            margin-bottom: 15px;
-            line-height: 1.4;
-        }
-        
-        .support-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: var(--radius);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin: 0 auto;
-            width: 100%;
-            max-width: 200px;
-        }
-        
-        .support-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
         }
 
         /* --- SCROLLBAR STYLING --- */
@@ -3112,7 +3061,6 @@
                         Features included:
                         <br>• Dashboard with wallet balances
                         <br>• Profile page
-                        <br>• Help Line page
                         <br>• Withdraw page
                         <br>• Verification page
                         <br>• Gmail Sell page
@@ -3125,26 +3073,6 @@
                 </div>
                 <div class="message-modal-actions">
                     <button class="master-btn master-btn-primary" onclick="closeMessageModal()">Close</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- HELP LINE PAGE -->
-        <div id="help-line-view" class="page-view">
-            <div class="page-header">
-                <div class="back-btn" onclick="navigateTo('dashboard')">
-                    <i class="fa-solid fa-arrow-left"></i>
-                </div>
-                <div class="page-title">Help Line</div>
-            </div>
-
-            <div class="help-line-container">
-                <!-- Support Cards will be loaded dynamically from Firestore -->
-                <div id="support-cards-container">
-                    <div style="text-align: center; padding: 40px 20px; color: var(--text-light);">
-                        <i class="fa-solid fa-spinner fa-spin" style="font-size: 48px; margin-bottom: 20px;"></i>
-                        <p>Loading support information...</p>
-                    </div>
                 </div>
             </div>
         </div>
@@ -3857,7 +3785,7 @@
             </div>
         </div>
 
-        <!-- SIDEBAR MENU -->
+        <!-- SIDEBAR MENU (UPDATED WITH SECTIONED STRUCTURE) -->
         <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMenu()"></div>
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
@@ -3872,42 +3800,63 @@
             </div>
 
             <div class="sidebar-menu">
+                <!-- Ref ID Display -->
                 <div class="menu-item" style="background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(37, 99, 235, 0.3);">
                     <i class="fa-solid fa-link"></i> 
                     <div style="font-size: 13px;">Ref ID: <strong style="color: white;" id="sidebar-ref-id">Loading...</strong></div>
                 </div>
-                
+
+                <!-- SECTION: My Account -->
+                <div class="sidebar-section-title">My Account</div>
                 <div class="menu-item" onclick="navigateTo('dashboard')">
                     <i class="fa-solid fa-gauge"></i> Dashboard
                 </div>
                 <div class="menu-item" onclick="navigateTo('profile')">
                     <i class="fa-solid fa-user"></i> Profile
                 </div>
-                <div class="menu-item" onclick="navigateTo('help-line')">
-                    <i class="fa-solid fa-headset"></i> Help Line
-                </div>
-                <div class="menu-item" onclick="navigateTo('withdraw')">
-                    <i class="fa-solid fa-money-bill-transfer"></i> Withdraw
-                </div>
-                <div class="menu-item" onclick="navigateTo('gmail-sell')">
-                    <i class="fa-brands fa-google"></i> Gmail Sell
-                </div>
-                <div class="menu-item" id="referral-menu-item" onclick="navigateTo('referral-system')">
+
+                <!-- SECTION: Referral Program -->
+                <div class="sidebar-section-title">Referral Program</div>
+                <div class="menu-item" onclick="navigateTo('referral-system')">
                     <i class="fa-solid fa-link"></i> Referral System
                 </div>
-                <div class="menu-item" onclick="navigateTo('salary-apply')">
-                    <i class="fa-solid fa-wallet"></i> Salary
-                </div>
-                <!-- ===== FREE JOB SIDEBAR MENU ITEM ===== -->
+
+                <!-- SECTION: Free Income -->
+                <div class="sidebar-section-title">Free Income</div>
                 <div class="menu-item" onclick="navigateTo('free-job-projects')">
                     <i class="fa-solid fa-briefcase"></i> Free Job
                 </div>
-                <!-- ===== JOB SUBMISSIONS SIDEBAR MENU ITEM ===== -->
                 <div class="menu-item" onclick="navigateTo('job-submissions')">
                     <i class="fa-solid fa-clipboard-list"></i> Job Submissions
                 </div>
-                
-                <div style="margin-top: 30px; border-top: 2px solid rgba(255, 255, 255, 0.1); padding-top: 20px;">
+
+                <!-- SECTION: Salary & Rewards -->
+                <div class="sidebar-section-title">Salary & Rewards</div>
+                <div class="menu-item" onclick="navigateTo('salary-apply')">
+                    <i class="fa-solid fa-wallet"></i> Salary
+                </div>
+
+                <!-- SECTION: Wallet & Withdraw -->
+                <div class="sidebar-section-title">Wallet & Withdraw</div>
+                <div class="menu-item" onclick="navigateTo('withdraw')">
+                    <i class="fa-solid fa-money-bill-transfer"></i> Withdraw
+                </div>
+
+                <!-- SECTION: Digital Selling -->
+                <div class="sidebar-section-title">Digital Selling</div>
+                <div class="menu-item" onclick="navigateTo('gmail-sell')">
+                     <i class="fa-brands fa-google"></i> Gmail Sell
+                </div>
+
+
+                <!-- SECTION: Support -->
+                <div class="sidebar-section-title">Support</div>
+                <a href="https://help-line.vercel.app" target="_blank" class="menu-item">
+                     <i class="fa-solid fa-headset"></i> Help Line
+                </a>
+
+                <!-- Divider and Logout (no section title) -->
+                <div style="margin-top: 20px; border-top: 2px solid rgba(255, 255, 255, 0.1); padding-top: 20px;">
                     <div class="menu-item" onclick="logout()">
                         <i class="fa-solid fa-right-from-bracket"></i> Logout
                     </div>
@@ -3915,8 +3864,8 @@
             </div>
         </div>
 
-        <!-- FLOATING BUTTON -->
-        <div class="fab" onclick="navigateTo('help-line')">
+        <!-- FLOATING BUTTON - changed to open external help line -->
+        <div class="fab" onclick="window.open('https://help-line.vercel.app','_blank')">
             <i class="fa-solid fa-headset"></i>
         </div>
 
@@ -3955,7 +3904,6 @@
         let gmailProcessingListener = null;
         let gmailHistoryListener = null;
         let gmailSettingsListener = null;
-        let supportContactsListener = null;
         let referralSummaryListener = null;
         let referralListListener = null;
         // ✅ Withdraw Requests Listener (replaces old withdrawHistoryListener)
@@ -4050,13 +3998,12 @@
                 referralMessageElement.textContent = referralSettings.referralShareMessage || 'আপনার বন্ধুকে আমন্ত্রণ করুন এবং প্রতি রেফারে ইনকাম করুন 50 টাকা';
             }
 
-            // Update referral link (if we have userData)
+            // Update referral link – now only baseUrl, no appended ID
             if (userData && userData.referralId) {
-                const baseUrl = referralSettings.baseUrl || 'https://smartpay.vercel.app/?ref=';
-                const referralLink = `${baseUrl}${userData.referralId}`;
+                const baseUrl = referralSettings.baseUrl || 'https://smartpay-wallet24.vercel.app/';
                 const referralLinkInput = document.getElementById('referral-link');
                 if (referralLinkInput) {
-                    referralLinkInput.value = referralLink;
+                    referralLinkInput.value = baseUrl; // ← only baseUrl, no ?ref=
                 }
             }
 
@@ -4457,11 +4404,10 @@
                 document.getElementById('referral-id-display').textContent = data.referralId;
                 document.getElementById('referral-id').value = data.referralId;
                 
-                // ✅ UPDATE REFERRAL LINK WITH REFERRAL SETTINGS
+                // ✅ UPDATE REFERRAL LINK WITH REFERRAL SETTINGS – now only baseUrl
                 if (referralSettings) {
-                    const baseUrl = referralSettings.baseUrl || 'https://smartpay.vercel.app/?ref=';
-                    const referralLink = `${baseUrl}${data.referralId}`;
-                    document.getElementById('referral-link').value = referralLink;
+                    const baseUrl = referralSettings.baseUrl || 'https://smartpay-wallet24.vercel.app/';
+                    document.getElementById('referral-link').value = baseUrl; // ← only baseUrl
                 }
             }
             
@@ -4736,13 +4682,11 @@
                     // loadWithdrawPackages();  // 🔁 REMOVED – now wallet-wise and dynamic
                     setupWalletTypesListener(); // ✅ NEW – load wallet types for withdraw
                     setupGmailListeners();
-                    setupSupportContactsListener();
                     
-                    // ✅ UPDATE REFERRAL LINK WITH REFERRAL SETTINGS
+                    // ✅ UPDATE REFERRAL LINK WITH REFERRAL SETTINGS – now only baseUrl
                     if (referralSettings && userData.referralId) {
-                        const baseUrl = referralSettings.baseUrl || 'https://smartpay.vercel.app/?ref=';
-                        const referralLink = `${baseUrl}${userData.referralId}`;
-                        document.getElementById('referral-link').value = referralLink;
+                        const baseUrl = referralSettings.baseUrl || 'https://smartpay-wallet24.vercel.app/';
+                        document.getElementById('referral-link').value = baseUrl;
                     }
                     
                     // ✅ Setup referral requests listener for this user (as referrer)
@@ -5828,7 +5772,6 @@
             
             const pages = {
                 'dashboard': 'dashboard-view',
-                'help-line': 'help-line-view',
                 'profile': 'profile-view',
                 'withdraw': 'withdraw-view',
                 'withdraw-processing': 'withdraw-processing-view',
@@ -5854,10 +5797,6 @@
                     
                     if (pageId === 'my-referrals') {
                         loadReferralList('all');
-                    }
-                    
-                    if (pageId === 'help-line') {
-                        setupSupportContactsListener();
                     }
                     
                     if (pageId === 'gmail-processing') {
@@ -6033,40 +5972,6 @@
             }
         }
 
-        // HELP LINE SYSTEM
-        function openEmailSupport(email) {
-            if (!email) {
-                showToast('Email support is not available', 'error');
-                return;
-            }
-            window.location.href = `mailto:${email}?subject=SmartPay Support Request`;
-        }
-
-        function openPhoneSupport(phone) {
-            if (!phone) {
-                showToast('Phone support is not available', 'error');
-                return;
-            }
-            window.location.href = `tel:${phone}`;
-        }
-
-        function openWhatsAppSupport(whatsapp) {
-            if (!whatsapp) {
-                showToast('WhatsApp support is not available', 'error');
-                return;
-            }
-            const message = encodeURIComponent('Hello, I need help with SmartPay.');
-            window.open(`https://wa.me/${whatsapp}?text=${message}`, '_blank');
-        }
-
-        function openTelegramChannel(telegram) {
-            if (!telegram) {
-                showToast('Telegram channel is not available', 'error');
-                return;
-            }
-            window.open(telegram, '_blank');
-        }
-
         // COPY FUNCTIONS
         function copyText(text) {
             if (navigator.clipboard && window.isSecureContext) {
@@ -6107,7 +6012,7 @@
                 return;
             }
             
-            const message = 'Join SmartPay using my referral link!';
+            const message = '💰 ঘরে বসেই শুরু করুন স্মার্ট ইনকামের নতুন যাত্রা! SmartPay দিচ্ছে দ্রুত পেমেন্ট ⚡ সম্পূর্ণ নিরাপদ ওয়ালেট সিস্টেম 🔐 এবং দারুণ সব সুযোগ–সুবিধা 🎁 আজই আমার রেফারেল লিংক দিয়ে যুক্ত হয়ে উপভোগ করুন ডিজিটাল আয়ের নতুন অভিজ্ঞতা 👇';
             const textToCopy = `${message}\n\n${link}`;
             copyText(textToCopy);
         }
@@ -6554,119 +6459,6 @@
             // 🔴 salary_applications and salary_payments listeners removed
         }
 
-        // SUPPORT CONTACTS LISTENER
-        function setupSupportContactsListener() {
-            if (supportContactsListener) {
-                supportContactsListener();
-            }
-
-            supportContactsListener = db.collection('support_contacts')
-                .doc('settings')
-                .onSnapshot((doc) => {
-                    if (doc.exists) {
-                        const supportData = doc.data();
-                        updateSupportUI(supportData);
-                    } else {
-                        updateSupportUI(null);
-                    }
-                }, (error) => {
-                    console.error('Error loading support contacts:', error);
-                    updateSupportUI(null);
-                });
-        }
-
-        function updateSupportUI(supportData) {
-            const supportContainer = document.getElementById('support-cards-container');
-            if (!supportContainer) return;
-
-            supportContainer.innerHTML = '';
-
-            if (!supportData) {
-                supportContainer.innerHTML = `
-                    <div style="text-align: center; padding: 40px 20px; color: var(--text-light);">
-                        <i class="fa-solid fa-exclamation-triangle" style="font-size: 48px; margin-bottom: 20px;"></i>
-                        <h3 style="color: var(--dark); margin-bottom: 10px;">No Support Channels Available</h3>
-                        <p style="color: var(--text-light);">Support contacts will be added soon. Please check back later.</p>
-                    </div>
-                `;
-                return;
-            }
-
-            let supportCardsHTML = '';
-
-            if (supportData.supportEmail && supportData.supportEmail.trim() !== '') {
-                supportCardsHTML += `
-                    <div class="support-card" id="email-support-card">
-                        <div class="support-icon" style="background: linear-gradient(135deg, #ea4335 0%, #d93025 100%);">
-                            <i class="fa-solid fa-envelope"></i>
-                        </div>
-                        <div class="support-title">Email Support</div>
-                        <div class="support-desc">Get direct support via email for any account-related issues.</div>
-                        <button class="master-btn master-btn-red master-btn-full" onclick="openEmailSupport('${supportData.supportEmail}')">
-                            <i class="fa-solid fa-paper-plane"></i> Send Email
-                        </button>
-                    </div>
-                `;
-            }
-
-            if (supportData.supportPhone && supportData.supportPhone.trim() !== '') {
-                supportCardsHTML += `
-                    <div class="support-card" id="phone-support-card">
-                        <div class="support-icon" style="background: linear-gradient(135deg, #34a853 0%, #2e8b46 100%);">
-                            <i class="fa-solid fa-phone"></i>
-                        </div>
-                        <div class="support-title">Direct Phone Support</div>
-                        <div class="support-desc">Speak directly with our support team for immediate assistance.</div>
-                        <button class="master-btn master-btn-green master-btn-full" onclick="openPhoneSupport('${supportData.supportPhone}')">
-                            <i class="fa-solid fa-phone"></i> Call Now
-                        </button>
-                    </div>
-                `;
-            }
-
-            if (supportData.whatsappNumber && supportData.whatsappNumber.trim() !== '') {
-                supportCardsHTML += `
-                    <div class="support-card" id="whatsapp-support-card">
-                        <div class="support-icon" style="background: linear-gradient(135deg, #25d366 0%, #1da851 100%);">
-                            <i class="fa-brands fa-whatsapp"></i>
-                        </div>
-                        <div class="support-title">WhatsApp Support</div>
-                        <div class="support-desc">Chat instantly with our support team via WhatsApp.</div>
-                        <button class="master-btn master-btn-green master-btn-full" onclick="openWhatsAppSupport('${supportData.whatsappNumber}')">
-                            <i class="fa-brands fa-whatsapp"></i> Chat Now
-                        </button>
-                    </div>
-                `;
-            }
-
-            if (supportData.telegramLink && supportData.telegramLink.trim() !== '') {
-                supportCardsHTML += `
-                    <div class="support-card" id="telegram-support-card">
-                        <div class="support-icon" style="background: linear-gradient(135deg, #0088cc 0%, #006699 100%);">
-                            <i class="fa-brands fa-telegram"></i>
-                        </div>
-                        <div class="support-title">Telegram Channel</div>
-                        <div class="support-desc">Join our Telegram channel for updates and announcements.</div>
-                        <button class="master-btn master-btn-primary master-btn-full" onclick="openTelegramChannel('${supportData.telegramLink}')">
-                            <i class="fa-brands fa-telegram"></i> Join Channel
-                        </button>
-                    </div>
-                `;
-            }
-
-            if (!supportCardsHTML) {
-                supportCardsHTML = `
-                    <div style="text-align: center; padding: 40px 20px; color: var(--text-light);">
-                        <i class="fa-solid fa-exclamation-triangle" style="font-size: 48px; margin-bottom: 20px;"></i>
-                        <h3 style="color: var(--dark); margin-bottom: 10px;">No Support Channels Available</h3>
-                        <p style="color: var(--text-light);">Support contacts will be added soon. Please check back later.</p>
-                    </div>
-                `;
-            }
-
-            supportContainer.innerHTML = supportCardsHTML;
-        }
-
         // ✅ FIXED: LOGOUT FUNCTION WITH CLEANUP
         async function logout() {
             try {
@@ -6725,11 +6517,6 @@
                 if (gmailWalletListener) {
                     gmailWalletListener();
                     gmailWalletListener = null;
-                }
-                
-                if (supportContactsListener) {
-                    supportContactsListener();
-                    supportContactsListener = null;
                 }
                 
                 if (referralListListener) {
@@ -7597,6 +7384,7 @@
             console.log('✅ PROBLEM #10 FIXED: Withdraw status logic corrected (totalWithdraw only on approved, refund on reject)');
             console.log('✅ PROBLEM #12 FIXED: Approved earnings sync into wallets (Referral, Free Job, Gmail)');
             console.log('✅ PROBLEM #3 FIXED: Salary packages unlock & claim system now working (one-time claim, wallet updates)');
+            console.log('✅ REFERRAL SYSTEM UPDATED: Link now shows only baseUrl, no auto-fill from URL');
 
             // Add event listener for wallet dropdown
             const walletSelect = document.getElementById('withdraw-wallet-select');
@@ -7608,35 +7396,10 @@
         });
 
         // =======================================================
-        // ✅ REFERRAL AUTO SIGNUP SYSTEM (Problem #13 Fix)
+        // ❌ Auto referral code from URL REMOVED (as per instructions)
         // =======================================================
-
-        window.addEventListener("load", function () {
-            // Step 1: Get referral code from URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const referralCodeFromLink = urlParams.get("ref");
-
-            console.log("Referral Code Detected:", referralCodeFromLink);
-
-            // Step 2: If referral code exists → Open Signup Page Automatically
-            if (referralCodeFromLink && referralCodeFromLink.trim() !== "") {
-                console.log("Opening Signup Page Automatically...");
-                
-                // Use existing showSignUp function
-                showSignUp();
-
-                // Step 3: Auto Fill Referral Code Field
-                setTimeout(() => {
-                    const referralInput = document.getElementById("signup-referral");
-                    if (referralInput) {
-                        referralInput.value = referralCodeFromLink.trim();
-                        // Prevent user from editing referral code
-                        referralInput.readOnly = true;
-                        console.log("Referral Code Auto Filled Successfully!");
-                    }
-                }, 400);
-            }
-        });
+        // The code that previously read the 'ref' parameter and auto-filled
+        // the signup form has been completely removed.
     </script>
 </body>
 </html>
