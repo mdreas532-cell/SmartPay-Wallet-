@@ -2817,6 +2817,50 @@
              border: none;
              -webkit-overflow-scrolling: touch;
          }
+
+         /* 🎁 Gift Page Header */
+.gift-header {
+    background: linear-gradient(135deg, #d946ef 0%, #a21caf 100%);
+    color: white;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 6px 25px rgba(168, 85, 247, 0.3);
+}
+
+/* Back Button */
+.gift-header .back-btn { 
+    font-size: 20px; 
+    cursor: pointer; 
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.15);
+    transition: 0.3s ease;
+}
+
+.gift-header .back-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateX(-3px);
+}
+
+/* Title */
+.gift-header .page-title { 
+    font-size: 18px; 
+    font-weight: 700; 
+    flex: 1; 
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.gift-header .page-title i {
+    font-size: 18px;
+}
     </style>
 </head>
 <body>
@@ -3859,6 +3903,22 @@
             </div>
         </div>
 
+        <!-- ========== NEW COMING SOON PAGES ========== -->
+        <!-- Instagram Sell (Coming Soon) -->
+        <div id="instagram-sell-view" class="page-view">
+            <div class="page-header">
+                <div class="back-btn" onclick="navigateTo('dashboard')">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+                <div class="page-title">Gift 🎁</div>
+            </div>
+            <div class="coming-soon-container">
+                <div class="coming-soon-icon"><i class="fa-brands fa-instagram"></i></div>
+                <h2 class="coming-soon-title">Coming Soon</h2>
+                <p class="coming-soon-message">This feature is under development. It will be available soon.</p>
+            </div>
+        </div>
+
         <!-- Telegram Sell (Coming Soon) -->
         <div id="telegram-sell-view" class="page-view">
             <div class="page-header">
@@ -3905,22 +3965,63 @@
         </div>
 
         <!-- Spin -->
-        <div id="spin-view" class="page-view">
+       <div id="spin-view" class="page-view">
 
+    <!-- 🔹 Page Header -->
     <div class="page-header">
+
+        <!-- Back Button -->
         <div class="back-btn" onclick="navigateTo('dashboard')">
             <i class="fa-solid fa-arrow-left"></i>
         </div>
-        <div class="page-title">Spin</div>
+
+        <!-- Page Title -->
+        <div class="page-title">
+            Spin
+        </div>
+
     </div>
 
-    <!-- Spin Iframe -->
+    <!-- 🎯 Spin Game Iframe Container -->
     <div class="spin-iframe-wrapper">
+
         <iframe 
             src="https://spin-smartpay.vercel.app"
             frameborder="0"
             allowfullscreen>
         </iframe>
+
+    </div>
+
+</div>
+
+        <!-- SIDEBAR MENU -->
+        <div id="gift-view" class="page-view">
+
+    <!-- 🔹 Page Header -->
+    <div class="page-header">
+
+        <!-- Back Button -->
+        <div class="back-btn" onclick="navigateTo('dashboard')">
+            <i class="fa-solid fa-arrow-left"></i>
+        </div>
+
+        <!-- Page Title -->
+        <div class="page-title">
+            Gift
+        </div>
+
+    </div>
+
+    <!-- 🎯 Gift Game Iframe Container -->
+    <div class="gift-iframe-wrapper">
+
+        <iframe 
+            src="https://gift-smartpay.vercel.app"
+            frameborder="0"
+            allowfullscreen>
+        </iframe>
+
     </div>
 
 </div>
@@ -3976,9 +4077,11 @@
                 <div class="menu-item" onclick="navigateTo('salary-apply')">
                     <i class="fa-solid fa-wallet"></i> Salary
                 </div>
-                <!-- Spin (coming soon) -->
                 <div class="menu-item" onclick="navigateTo('spin')">
                     <i class="fa-solid fa-gear fa-spin"></i> Spin
+                </div>
+                <div class="menu-item" onclick="navigateTo('gift')">
+                    <i class="fa-solid fa-gift"></i> Gift
                 </div>
 
                 <!-- SECTION: Wallet & Withdraw -->
