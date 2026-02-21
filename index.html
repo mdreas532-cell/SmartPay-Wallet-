@@ -3844,6 +3844,52 @@
         </div>
 
         <!-- ========== NEW COMING SOON PAGES ========== -->
+        <!-- Gift (Coming Soon) -->
+        <div id="gift-view" class="page-view">
+
+    <!-- 🔹 Page Header -->
+    <div class="page-header">
+
+        <!-- Back Button -->
+        <div class="back-btn" onclick="navigateTo('dashboard')">
+            <i class="fa-solid fa-arrow-left"></i>
+        </div>
+
+        <!-- Page Title -->
+        <div class="page-title">
+            Gift
+        </div>
+
+    </div>
+
+    <!-- 🎯 Gift Game Iframe Container -->
+    <div class="gift-iframe-wrapper">
+
+        <iframe 
+            src="https://gift-smartpay.vercel.app"
+            frameborder="0"
+            allowfullscreen>
+        </iframe>
+
+    </div>
+
+</div>
+
+        <!-- Facebook Sell (Coming Soon) -->
+        <div id="facebook-sell-view" class="page-view">
+            <div class="page-header">
+                <div class="back-btn" onclick="navigateTo('dashboard')">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+                <div class="page-title">Facebook Sell</div>
+            </div>
+            <div class="coming-soon-container">
+                <div class="coming-soon-icon"><i class="fa-brands fa-facebook"></i></div>
+                <h2 class="coming-soon-title">Coming Soon</h2>
+                <p class="coming-soon-message">এই ফিচারটি খুব শীঘ্রই চালু করা হবে।</p>
+            </div>
+        </div>
+
         <!-- Instagram Sell (Coming Soon) -->
         <div id="instagram-sell-view" class="page-view">
             <div class="page-header">
@@ -3855,23 +3901,7 @@
             <div class="coming-soon-container">
                 <div class="coming-soon-icon"><i class="fa-brands fa-instagram"></i></div>
                 <h2 class="coming-soon-title">Coming Soon</h2>
-                <p class="coming-soon-message">This feature is under development. It will be available soon.</p>
-            </div>
-        </div>
-
-        <!-- ========== NEW COMING SOON PAGES ========== -->
-        <!-- Instagram Sell (Coming Soon) -->
-        <div id="instagram-sell-view" class="page-view">
-            <div class="page-header">
-                <div class="back-btn" onclick="navigateTo('dashboard')">
-                    <i class="fa-solid fa-arrow-left"></i>
-                </div>
-                <div class="page-title">Gift 🎁</div>
-            </div>
-            <div class="coming-soon-container">
-                <div class="coming-soon-icon"><i class="fa-brands fa-instagram"></i></div>
-                <h2 class="coming-soon-title">Coming Soon</h2>
-                <p class="coming-soon-message">This feature is under development. It will be available soon.</p>
+                <p class="coming-soon-message">এই ফিচারটি খুব শীঘ্রই চালু করা হবে।</p>
             </div>
         </div>
 
@@ -3886,7 +3916,7 @@
             <div class="coming-soon-container">
                 <div class="coming-soon-icon"><i class="fa-brands fa-telegram"></i></div>
                 <h2 class="coming-soon-title">Coming Soon</h2>
-                <p class="coming-soon-message">This feature is under development. It will be available soon.</p>
+                <p class="coming-soon-message">এই ফিচারটি খুব শীঘ্রই চালু করা হবে।</p>
             </div>
         </div>
 
@@ -3901,7 +3931,7 @@
             <div class="coming-soon-container">
                 <div class="coming-soon-icon"><i class="fa-brands fa-whatsapp"></i></div>
                 <h2 class="coming-soon-title">Coming Soon</h2>
-                <p class="coming-soon-message">This feature is under development. It will be available soon.</p>
+                <p class="coming-soon-message">এই ফিচারটি খুব শীঘ্রই চালু করা হবে।</p>
             </div>
         </div>
 
@@ -3916,40 +3946,26 @@
             <div class="coming-soon-container">
                 <div class="coming-soon-icon"><i class="fa-solid fa-microchip"></i></div>
                 <h2 class="coming-soon-title">Coming Soon</h2>
-                <p class="coming-soon-message">This feature is under development. It will be available soon.</p>
+                <p class="coming-soon-message">এই ফিচারটি খুব শীঘ্রই চালু করা হবে।</p>
             </div>
         </div>
 
-        <!-- Spin -->
+        <!-- Spin (existing functionality remains unchanged) -->
        <div id="spin-view" class="page-view">
-
-    <!-- 🔹 Page Header -->
-    <div class="page-header">
-
-        <!-- Back Button -->
-        <div class="back-btn" onclick="navigateTo('dashboard')">
-            <i class="fa-solid fa-arrow-left"></i>
+            <div class="page-header">
+                <div class="back-btn" onclick="navigateTo('dashboard')">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+                <div class="page-title">Spin</div>
+            </div>
+            <div class="spin-iframe-wrapper">
+                <iframe 
+                    src="https://spin-smartpay.vercel.app"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+            </div>
         </div>
-
-        <!-- Page Title -->
-        <div class="page-title">
-            Spin
-        </div>
-
-    </div>
-
-    <!-- 🎯 Spin Game Iframe Container -->
-    <div class="spin-iframe-wrapper">
-
-        <iframe 
-            src="https://spin-smartpay.vercel.app"
-            frameborder="0"
-            allowfullscreen>
-        </iframe>
-
-    </div>
-
-</div>
 
         <!-- SIDEBAR MENU -->
         <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMenu()"></div>
@@ -4023,7 +4039,6 @@
                 <div class="menu-item" onclick="navigateTo('facebook-sell')">
                     <i class="fa-brands fa-facebook"></i> Facebook Sell
                 </div>
-                <!-- Instagram, Telegram, WhatsApp (coming soon) -->
                 <div class="menu-item" onclick="navigateTo('instagram-sell')">
                     <i class="fa-brands fa-instagram"></i> Instagram Sell
                 </div>
@@ -5866,6 +5881,8 @@
                 'free-job-details': 'free-job-details-view',
                 'job-submissions': 'job-submissions-view',
                 // New coming soon pages
+                'gift': 'gift-view',
+                'facebook-sell': 'facebook-sell-view',
                 'instagram-sell': 'instagram-sell-view',
                 'telegram-sell': 'telegram-sell-view',
                 'whatsapp-sell': 'whatsapp-sell-view',
@@ -7414,7 +7431,7 @@
             console.log('✅ PROBLEM #3 FIXED: Salary packages unlock & claim system now working (one-time claim, wallet updates)');
             console.log('✅ REFERRAL SYSTEM UPDATED: Link now shows only baseUrl, no auto-fill from URL');
             console.log('✅ NEW WALLETS ADDED: Gift Wallet, API Job Wallet, Spin Wallet');
-            console.log('✅ COMING SOON PAGES: Instagram, Telegram, WhatsApp, API Job, Spin');
+            console.log('✅ COMING SOON PAGES: Gift, Facebook Sell, Instagram, Telegram, WhatsApp, API Job');
 
             // Add event listener for wallet dropdown
             const walletSelect = document.getElementById('withdraw-wallet-select');
