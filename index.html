@@ -941,6 +941,10 @@
         .bg-teal { background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%); }
         .bg-pink { background: linear-gradient(135deg, #ec4899 0%, #db2777 100%); }
         .bg-yellow { background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); } /* For Free Job Wallet */
+        /* New wallet colors */
+        .bg-gift { background: linear-gradient(135deg, #d946ef 0%, #a21caf 100%); } /* Purple-pink */
+        .bg-api { background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%); } /* Indigo */
+        .bg-spin { background: linear-gradient(135deg, #f97316 0%, #c2410c 100%); } /* Orange gradient */
 
         /* --- Package Grid for Withdraw --- */
         .package-grid {
@@ -2769,6 +2773,35 @@
             background: white;
             transform: scale(1.2);
         }
+
+        /* --- COMING SOON PAGE STYLES --- */
+        .coming-soon-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .coming-soon-icon {
+            font-size: 80px;
+            color: var(--primary-light);
+            margin-bottom: 20px;
+            opacity: 0.7;
+        }
+        .coming-soon-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+        .coming-soon-message {
+            font-size: 16px;
+            color: var(--text-light);
+            max-width: 300px;
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
@@ -2995,7 +3028,7 @@
                 <button class="master-btn master-btn-primary master-btn-sm">Tap to view</button>
             </div>
 
-            <!-- UPDATED COMPACT WALLET SECTION -->
+            <!-- UPDATED COMPACT WALLET SECTION (Now with 3 new wallets) -->
             <div class="wallet-section">
                 <h3 class="section-title">Your Wallets <span>Balances & summary</span></h3>
                 
@@ -3038,6 +3071,24 @@
                         <div class="card-icon-area bg-yellow"><i class="fa-solid fa-briefcase"></i></div>
                         <div class="card-amount" id="free-job-balance">0.00</div>
                         <div class="card-title">Free Job Wallet</div>
+                    </div>
+                    <!-- ===== NEW: GIFT WALLET ===== -->
+                    <div class="stat-card">
+                        <div class="card-icon-area bg-gift"><i class="fa-solid fa-gift"></i></div>
+                        <div class="card-amount" id="gift-wallet">0.00</div>
+                        <div class="card-title">Gift Wallet</div>
+                    </div>
+                    <!-- ===== NEW: API JOB WALLET ===== -->
+                    <div class="stat-card">
+                        <div class="card-icon-area bg-api"><i class="fa-solid fa-microchip"></i></div>
+                        <div class="card-amount" id="api-job-wallet">0.00</div>
+                        <div class="card-title">API Job Wallet</div>
+                    </div>
+                    <!-- ===== NEW: SPIN WALLET ===== -->
+                    <div class="stat-card">
+                        <div class="card-icon-area bg-spin"><i class="fa-solid fa-dharmachakra"></i></div>
+                        <div class="card-amount" id="spin-wallet">0.00</div>
+                        <div class="card-title">Spin Wallet</div>
                     </div>
                 </div>
             </div>
@@ -3777,6 +3828,82 @@
             </div>
         </div>
 
+        <!-- ========== NEW COMING SOON PAGES ========== -->
+        <!-- Instagram Sell (Coming Soon) -->
+        <div id="instagram-sell-view" class="page-view">
+            <div class="page-header">
+                <div class="back-btn" onclick="navigateTo('dashboard')">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+                <div class="page-title">Instagram Sell</div>
+            </div>
+            <div class="coming-soon-container">
+                <div class="coming-soon-icon"><i class="fa-brands fa-instagram"></i></div>
+                <h2 class="coming-soon-title">Coming Soon</h2>
+                <p class="coming-soon-message">This feature is under development. It will be available soon.</p>
+            </div>
+        </div>
+
+        <!-- Telegram Sell (Coming Soon) -->
+        <div id="telegram-sell-view" class="page-view">
+            <div class="page-header">
+                <div class="back-btn" onclick="navigateTo('dashboard')">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+                <div class="page-title">Telegram Sell</div>
+            </div>
+            <div class="coming-soon-container">
+                <div class="coming-soon-icon"><i class="fa-brands fa-telegram"></i></div>
+                <h2 class="coming-soon-title">Coming Soon</h2>
+                <p class="coming-soon-message">This feature is under development. It will be available soon.</p>
+            </div>
+        </div>
+
+        <!-- WhatsApp Sell (Coming Soon) -->
+        <div id="whatsapp-sell-view" class="page-view">
+            <div class="page-header">
+                <div class="back-btn" onclick="navigateTo('dashboard')">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+                <div class="page-title">WhatsApp Sell</div>
+            </div>
+            <div class="coming-soon-container">
+                <div class="coming-soon-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                <h2 class="coming-soon-title">Coming Soon</h2>
+                <p class="coming-soon-message">This feature is under development. It will be available soon.</p>
+            </div>
+        </div>
+
+        <!-- API Job (Coming Soon) -->
+        <div id="api-jobs-view" class="page-view">
+            <div class="page-header">
+                <div class="back-btn" onclick="navigateTo('dashboard')">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+                <div class="page-title">API Job</div>
+            </div>
+            <div class="coming-soon-container">
+                <div class="coming-soon-icon"><i class="fa-solid fa-microchip"></i></div>
+                <h2 class="coming-soon-title">Coming Soon</h2>
+                <p class="coming-soon-message">This feature is under development. It will be available soon.</p>
+            </div>
+        </div>
+
+        <!-- Spin (Coming Soon) -->
+        <div id="spin-view" class="page-view">
+            <div class="page-header">
+                <div class="back-btn" onclick="navigateTo('dashboard')">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+                <div class="page-title">Spin</div>
+            </div>
+            <div class="coming-soon-container">
+                <div class="coming-soon-icon"><i class="fa-solid fa-dharmachakra"></i></div>
+                <h2 class="coming-soon-title">Coming Soon</h2>
+                <p class="coming-soon-message">This feature is under development. It will be available soon.</p>
+            </div>
+        </div>
+
         <!-- SIDEBAR MENU -->
         <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMenu()"></div>
         <div class="sidebar" id="sidebar">
@@ -3818,6 +3945,7 @@
                 <div class="menu-item" onclick="navigateTo('free-job-projects')">
                     <i class="fa-solid fa-briefcase"></i> Free Job
                 </div>
+                <!-- API Job (coming soon) -->
                 <div class="menu-item" onclick="navigateTo('api-jobs')">
                     <i class="fa-solid fa-list-check"></i> API Job
                 </div>
@@ -3827,6 +3955,7 @@
                 <div class="menu-item" onclick="navigateTo('salary-apply')">
                     <i class="fa-solid fa-wallet"></i> Salary
                 </div>
+                <!-- Spin (coming soon) -->
                 <div class="menu-item" onclick="navigateTo('spin')">
                     <i class="fa-solid fa-gear fa-spin"></i> Spin
                 </div>
@@ -3845,6 +3974,7 @@
                 <div class="menu-item" onclick="navigateTo('facebook-sell')">
                     <i class="fa-brands fa-facebook"></i> Facebook Sell
                 </div>
+                <!-- Instagram, Telegram, WhatsApp (coming soon) -->
                 <div class="menu-item" onclick="navigateTo('instagram-sell')">
                     <i class="fa-brands fa-instagram"></i> Instagram Sell
                 </div>
@@ -4418,6 +4548,17 @@
                 document.getElementById('free-job-balance').textContent = data.freeJobBalance.toFixed(2);
             }
             
+            // New wallets
+            if (data.giftWallet !== undefined) {
+                document.getElementById('gift-wallet').textContent = data.giftWallet.toFixed(2);
+            }
+            if (data.apiJobWallet !== undefined) {
+                document.getElementById('api-job-wallet').textContent = data.apiJobWallet.toFixed(2);
+            }
+            if (data.spinWallet !== undefined) {
+                document.getElementById('spin-wallet').textContent = data.spinWallet.toFixed(2);
+            }
+            
             if (selectedWalletKey) {
                 updateWithdrawAvailableBalance();
             }
@@ -4481,6 +4622,9 @@
                     totalWithdraw: 0,
                     gmailWallet: 0.00,
                     freeJobBalance: 0.00,
+                    giftWallet: 0.00,          // NEW
+                    apiJobWallet: 0.00,         // NEW
+                    spinWallet: 0.00,            // NEW
                     verificationStatus: 'unverified',
                     joinDate: firebase.firestore.FieldValue.serverTimestamp(),
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -5091,6 +5235,9 @@
                 case 'salaryWallet': currentBalance = userData.salaryWallet || 0; break;
                 case 'gmailWallet': currentBalance = userData.gmailWallet || 0; break;
                 case 'freeJobBalance': currentBalance = userData.freeJobBalance || 0; break;
+                case 'giftWallet': currentBalance = userData.giftWallet || 0; break;
+                case 'apiJobWallet': currentBalance = userData.apiJobWallet || 0; break;
+                case 'spinWallet': currentBalance = userData.spinWallet || 0; break;
                 default: currentBalance = 0;
             }
 
@@ -5119,6 +5266,9 @@
                         case 'salaryWallet': freshBalance = freshData.salaryWallet || 0; break;
                         case 'gmailWallet': freshBalance = freshData.gmailWallet || 0; break;
                         case 'freeJobBalance': freshBalance = freshData.freeJobBalance || 0; break;
+                        case 'giftWallet': freshBalance = freshData.giftWallet || 0; break;
+                        case 'apiJobWallet': freshBalance = freshData.apiJobWallet || 0; break;
+                        case 'spinWallet': freshBalance = freshData.spinWallet || 0; break;
                     }
                     
                     if (freshBalance < selectedWithdrawPackage.withdrawAmount) {
@@ -5665,7 +5815,13 @@
                 'free-job-cards': 'free-job-cards-view',
                 'free-job-jobs': 'free-job-jobs-view',
                 'free-job-details': 'free-job-details-view',
-                'job-submissions': 'job-submissions-view'
+                'job-submissions': 'job-submissions-view',
+                // New coming soon pages
+                'instagram-sell': 'instagram-sell-view',
+                'telegram-sell': 'telegram-sell-view',
+                'whatsapp-sell': 'whatsapp-sell-view',
+                'api-jobs': 'api-jobs-view',
+                'spin': 'spin-view'
             };
             
             if(pages[pageId]) {
@@ -5787,6 +5943,9 @@
                 case 'salaryWallet': balance = userData.salaryWallet || 0; break;
                 case 'gmailWallet': balance = userData.gmailWallet || 0; break;
                 case 'freeJobBalance': balance = userData.freeJobBalance || 0; break;
+                case 'giftWallet': balance = userData.giftWallet || 0; break;
+                case 'apiJobWallet': balance = userData.apiJobWallet || 0; break;
+                case 'spinWallet': balance = userData.spinWallet || 0; break;
                 default: balance = 0;
             }
             document.getElementById('withdraw-available-balance').textContent = balance.toFixed(2);
@@ -7205,6 +7364,8 @@
             console.log('✅ PROBLEM #12 FIXED: Approved earnings sync into wallets (Referral, Free Job, Gmail)');
             console.log('✅ PROBLEM #3 FIXED: Salary packages unlock & claim system now working (one-time claim, wallet updates)');
             console.log('✅ REFERRAL SYSTEM UPDATED: Link now shows only baseUrl, no auto-fill from URL');
+            console.log('✅ NEW WALLETS ADDED: Gift Wallet, API Job Wallet, Spin Wallet');
+            console.log('✅ COMING SOON PAGES: Instagram, Telegram, WhatsApp, API Job, Spin');
 
             // Add event listener for wallet dropdown
             const walletSelect = document.getElementById('withdraw-wallet-select');
