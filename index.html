@@ -354,8 +354,7 @@
             border-radius: 0;
             position: relative;
             box-shadow: none;
-            overflow-x: hidden;
-            overflow-y: auto;
+            overflow: hidden;
             transition: var(--transition);
             margin: 0;
             display: none;
@@ -2802,6 +2801,22 @@
             max-width: 300px;
             line-height: 1.6;
         }
+
+        .spin-iframe-wrapper {
+            position: fixed;
+            top: 70px;     /* header height */
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+         }
+
+         .spin-iframe-wrapper iframe {
+             width: 100%;
+             height: 100%;
+             border: none;
+             -webkit-overflow-scrolling: touch;
+         }
     </style>
 </head>
 <body>
@@ -3890,12 +3905,24 @@
         </div>
 
         <!-- Spin -->
-        <div style="position:fixed; top:70px; left:0; right:0; bottom:0;">
-    <iframe 
-        src="https://spin-smartpay.vercel.app"
-        style="width:100%; height:100%; border:none; -webkit-overflow-scrolling: touch;"
-        scrolling="yes">
-    </iframe>
+        <div id="spin-view" class="page-view">
+
+    <div class="page-header">
+        <div class="back-btn" onclick="navigateTo('dashboard')">
+            <i class="fa-solid fa-arrow-left"></i>
+        </div>
+        <div class="page-title">Spin</div>
+    </div>
+
+    <!-- Spin Iframe -->
+    <div class="spin-iframe-wrapper">
+        <iframe 
+            src="https://spin-smartpay.vercel.app"
+            frameborder="0"
+            allowfullscreen>
+        </iframe>
+    </div>
+
 </div>
 
         <!-- SIDEBAR MENU -->
