@@ -7,10 +7,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Firebase SDK -->
+    <!-- Firebase SDK (including Storage) -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
     
     <style>
         /* --- MODERN RESET & VARIABLES --- */
@@ -993,7 +994,7 @@
             color: var(--success);
         }
 
-        /* --- MODERN SIDEBAR MENU --- */
+        /* --- MODERN SIDEBAR MENU (DYNAMIC COLORS via CSS variables) --- */
         .sidebar-overlay {
             position: fixed; 
             top: 0; 
@@ -1012,7 +1013,7 @@
             right: -350px;
             width: 320px; 
             height: 100%;
-            background: linear-gradient(180deg, var(--dark) 0%, #0f172a 100%); 
+            background: linear-gradient(180deg, var(--sidebar-bg-start, #0f172a) 0%, var(--sidebar-bg-end, #1e293b) 100%); 
             z-index: 1000;
             transition: right 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
             display: flex;
@@ -1022,7 +1023,7 @@
         .sidebar.active { right: 0; }
         
         .sidebar-header {
-            background: rgba(255, 255, 255, 0.05); 
+            background: var(--sidebar-header-bg, rgba(255, 255, 255, 0.05)); 
             padding: 25px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
             display: flex; 
@@ -1045,11 +1046,38 @@
             color: white;
             font-size: 22px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            overflow: hidden;
+            position: relative;
+        }
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .user-avatar .edit-icon {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: var(--primary);
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: white;
+            cursor: pointer;
+            border: 2px solid white;
+            transition: var(--transition);
+        }
+        .user-avatar .edit-icon:hover {
+            transform: scale(1.1);
         }
         .user-info h4 { 
             font-size: 16px; 
             font-weight: 700; 
-            color: white;
+            color: var(--sidebar-header-text, white);
             margin-bottom: 5px;
         }
         .verified-badge { 
@@ -1108,7 +1136,7 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            color: #94a3b8;
+            color: var(--sidebar-section-title, #94a3b8);
             padding: 16px 0 6px 10px;
             margin: 10px 0 4px 0;
             border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -1118,10 +1146,10 @@
             align-items: center; 
             gap: 15px;
             padding: 16px 20px;
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--sidebar-menu-bg, rgba(255, 255, 255, 0.05));
             border-radius: var(--radius);
             margin-bottom: 10px;
-            color: #cbd5e1;
+            color: var(--sidebar-menu-text, #cbd5e1);
             text-decoration: none;
             font-size: 15px;
             font-weight: 500;
@@ -1130,19 +1158,19 @@
             border-left: 3px solid transparent;
         }
         .menu-item:hover { 
-            background: rgba(255, 255, 255, 0.1); 
-            color: white;
+            background: var(--sidebar-menu-hover-bg, rgba(255, 255, 255, 0.1)); 
+            color: var(--sidebar-menu-hover-text, white);
             transform: translateX(5px);
-            border-left: 3px solid var(--primary);
+            border-left: 3px solid var(--sidebar-menu-active-border, var(--primary));
         }
         .menu-item i { 
             width: 24px; 
             text-align: center; 
-            color: #94a3b8;
+            color: var(--sidebar-menu-icon, #94a3b8);
             font-size: 18px;
         }
         .menu-item:hover i {
-            color: white;
+            color: var(--sidebar-menu-hover-icon, white);
         }
         .menu-logout { 
             color: #f87171; 
@@ -1153,6 +1181,12 @@
         }
         .menu-logout:hover {
             background: rgba(239, 68, 68, 0.2);
+        }
+        /* Ref ID box */
+        .menu-item.ref-box {
+            background: var(--sidebar-ref-bg, #334155);
+            border: 2px solid var(--sidebar-ref-border, rgba(37, 99, 235, 0.3));
+            color: var(--sidebar-ref-text, white);
         }
 
         /* --- PAGES --- */
@@ -2459,6 +2493,7 @@
             border: 1px solid var(--light-2);
             transition: var(--transition);
             cursor: pointer;
+            position: relative;
         }
         .free-job-project-card:hover,
         .free-job-card-item:hover,
@@ -2864,6 +2899,34 @@
              border: none;
              -webkit-overflow-scrolling: touch;
          }
+
+        /* Profile photo update page */
+        .profile-photo-container {
+            padding: 20px;
+            min-height: auto;
+            text-align: center;
+        }
+        .current-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 20px auto;
+            overflow: hidden;
+            border: 3px solid var(--primary);
+            box-shadow: var(--shadow);
+        }
+        .current-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .photo-upload-input {
+            margin: 20px 0;
+        }
+        .upload-progress {
+            margin-top: 15px;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -3287,6 +3350,28 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- PROFILE PHOTO UPDATE PAGE (NEW) -->
+        <div id="profile-photo-update-view" class="page-view">
+            <div class="page-header">
+                <div class="back-btn" onclick="navigateTo('profile')">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+                <div class="page-title">Update Profile Photo</div>
+            </div>
+            <div class="profile-photo-container">
+                <div class="current-photo" id="current-photo-display">
+                    <img src="" alt="Profile" id="profile-photo-img">
+                </div>
+                <p style="margin-bottom: 20px; color: var(--text);">Upload a new photo (JPG, PNG, max 2MB)</p>
+                <input type="file" class="photo-upload-input" id="photo-upload" accept="image/*">
+                <div class="upload-progress" id="upload-progress">
+                    <progress value="0" max="100" style="width: 100%;"></progress>
+                    <span id="progress-text">0%</span>
+                </div>
+                <button class="master-btn master-btn-primary master-btn-full" onclick="uploadProfilePhoto()">Upload Photo</button>
             </div>
         </div>
 
@@ -3769,7 +3854,7 @@
             </div>
         </div>
 
-        <!-- FREE JOB PROJECTS PAGE -->
+        <!-- FREE JOB PROJECTS PAGE (UNLIMITED, NO LIMIT DISPLAY) -->
         <div id="free-job-projects-view" class="page-view">
             <div class="page-header">
                 <div class="back-btn" onclick="navigateTo('dashboard')">
@@ -3785,7 +3870,7 @@
             </div>
         </div>
 
-        <!-- FREE JOB CARDS PAGE -->
+        <!-- FREE JOB CARDS PAGE (with per-user daily limit check) -->
         <div id="free-job-cards-view" class="page-view">
             <div class="page-header">
                 <div class="back-btn" onclick="navigateTo('free-job-projects')">
@@ -3893,34 +3978,20 @@
         <!-- ========== NEW COMING SOON PAGES ========== -->
         <!-- Gift (Coming Soon) -->
         <div id="gift-view" class="page-view">
-
-    <!-- 🔹 Page Header -->
-    <div class="page-header">
-
-        <!-- Back Button -->
-        <div class="back-btn" onclick="navigateTo('dashboard')">
-            <i class="fa-solid fa-arrow-left"></i>
+            <div class="page-header">
+                <div class="back-btn" onclick="navigateTo('dashboard')">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+                <div class="page-title">Gift</div>
+            </div>
+            <div class="gift-iframe-wrapper">
+                <iframe 
+                    src="https://gift-smartpay.vercel.app"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+            </div>
         </div>
-
-        <!-- Page Title -->
-        <div class="page-title">
-            Gift
-        </div>
-
-    </div>
-
-    <!-- 🎯 Gift Game Iframe Container -->
-    <div class="gift-iframe-wrapper">
-
-        <iframe 
-            src="https://gift-smartpay.vercel.app"
-            frameborder="0"
-            allowfullscreen>
-        </iframe>
-
-    </div>
-
-</div>
 
         <!-- Facebook Sell (Coming Soon) -->
         <div id="facebook-sell-view" class="page-view">
@@ -3998,7 +4069,7 @@
         </div>
 
         <!-- Spin (existing functionality remains unchanged) -->
-       <div id="spin-view" class="page-view">
+        <div id="spin-view" class="page-view">
             <div class="page-header">
                 <div class="back-btn" onclick="navigateTo('dashboard')">
                     <i class="fa-solid fa-arrow-left"></i>
@@ -4014,12 +4085,16 @@
             </div>
         </div>
 
-        <!-- SIDEBAR MENU -->
+        <!-- SIDEBAR MENU (DYNAMIC COLORS VIA CSS VARIABLES) -->
         <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMenu()"></div>
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="user-profile">
-                    <div class="user-avatar"><i class="fa-solid fa-user"></i></div>
+                    <div class="user-avatar" id="sidebar-avatar" onclick="navigateTo('profile-photo-update')">
+                        <img src="" alt="Profile" id="sidebar-avatar-img" style="display: none;">
+                        <i class="fa-solid fa-user" id="sidebar-avatar-icon"></i>
+                        <span class="edit-icon" onclick="event.stopPropagation(); navigateTo('profile-photo-update')"><i class="fa-solid fa-pencil"></i></span>
+                    </div>
                     <div class="user-info">
                         <h4 id="sidebar-username">Loading...</h4>
                         <span class="unverified-badge" id="badge-text"><i class="fa-solid fa-xmark"></i> Unverified</span>
@@ -4030,7 +4105,7 @@
 
             <div class="sidebar-menu">
                 <!-- Ref ID Display -->
-                <div class="menu-item" style="background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(37, 99, 235, 0.3);">
+                <div class="menu-item ref-box" style="background: var(--sidebar-ref-bg, #334155); border: 2px solid var(--sidebar-ref-border, rgba(37, 99, 235, 0.3)); color: var(--sidebar-ref-text, white);">
                     <i class="fa-solid fa-link"></i> 
                     <div style="font-size: 13px;">Ref ID: <strong style="color: white;" id="sidebar-ref-id">Loading...</strong></div>
                 </div>
@@ -4139,6 +4214,7 @@
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
+        const storage = firebase.storage();
 
         // --- GLOBAL VARIABLES ---
         let userData = null;
@@ -4148,6 +4224,7 @@
         let selectedWithdrawPackage = null;
         let appConfig = null;
         let appConfigListener = null;
+        let sidebarDesignListener = null; // for sidebar theme
         let salaryPackagesListener = null;
         let withdrawPackagesListener = null;
         let gmailProcessingListener = null;
@@ -4182,6 +4259,127 @@
         let jobSubmissionsListener = null;
         let currentSubmissionFilter = 'all';
         let allSubmissions = [];
+
+        // ========== SIDEBAR THEME LISTENER ==========
+        function setupSidebarThemeListener() {
+            if (sidebarDesignListener) sidebarDesignListener();
+            sidebarDesignListener = db.collection('app_design').doc('sidebar_theme')
+                .onSnapshot((doc) => {
+                    if (doc.exists) {
+                        const theme = doc.data();
+                        applySidebarTheme(theme);
+                    } else {
+                        // fallback defaults (already in CSS)
+                        console.log('No sidebar theme doc, using defaults');
+                    }
+                }, (error) => {
+                    console.error('Error loading sidebar theme:', error);
+                });
+        }
+
+        function applySidebarTheme(theme) {
+            const root = document.documentElement;
+            if (theme.headerBackground) root.style.setProperty('--sidebar-header-bg', theme.headerBackground);
+            if (theme.headerTextColor) root.style.setProperty('--sidebar-header-text', theme.headerTextColor);
+            if (theme.sidebarBackgroundStart) root.style.setProperty('--sidebar-bg-start', theme.sidebarBackgroundStart);
+            if (theme.sidebarBackgroundEnd) root.style.setProperty('--sidebar-bg-end', theme.sidebarBackgroundEnd);
+            if (theme.menuItemBackground) root.style.setProperty('--sidebar-menu-bg', theme.menuItemBackground);
+            if (theme.menuItemHoverBackground) root.style.setProperty('--sidebar-menu-hover-bg', theme.menuItemHoverBackground);
+            if (theme.menuItemTextColor) root.style.setProperty('--sidebar-menu-text', theme.menuItemTextColor);
+            if (theme.menuItemIconColor) root.style.setProperty('--sidebar-menu-icon', theme.menuItemIconColor);
+            if (theme.menuItemActiveBorderColor) root.style.setProperty('--sidebar-menu-active-border', theme.menuItemActiveBorderColor);
+            if (theme.sectionTitleColor) root.style.setProperty('--sidebar-section-title', theme.sectionTitleColor);
+            if (theme.refBoxBackground) root.style.setProperty('--sidebar-ref-bg', theme.refBoxBackground);
+            if (theme.refBoxTextColor) root.style.setProperty('--sidebar-ref-text', theme.refBoxTextColor);
+        }
+
+        // ========== PROFILE PHOTO UPLOAD ==========
+        async function uploadProfilePhoto() {
+            const fileInput = document.getElementById('photo-upload');
+            const file = fileInput.files[0];
+            if (!file) {
+                showToast('Please select a file', 'error');
+                return;
+            }
+            if (!file.type.startsWith('image/')) {
+                showToast('Only image files are allowed', 'error');
+                return;
+            }
+            if (file.size > 2 * 1024 * 1024) {
+                showToast('File size must be less than 2MB', 'error');
+                return;
+            }
+
+            const user = auth.currentUser;
+            if (!user) return;
+
+            const progressDiv = document.getElementById('upload-progress');
+            const progressBar = progressDiv.querySelector('progress');
+            const progressText = document.getElementById('progress-text');
+            progressDiv.style.display = 'block';
+
+            const storageRef = storage.ref(`profile_images/${user.uid}.jpg`);
+            const uploadTask = storageRef.put(file);
+
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    progressBar.value = progress;
+                    progressText.textContent = Math.round(progress) + '%';
+                },
+                (error) => {
+                    console.error('Upload error:', error);
+                    showToast('Upload failed', 'error');
+                    progressDiv.style.display = 'none';
+                },
+                async () => {
+                    // Upload complete, get download URL
+                    const downloadURL = await uploadTask.ref.getDownloadURL();
+                    // Update user document
+                    await userDocRef.update({
+                        profileImageUrl: downloadURL,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    showToast('Profile photo updated!');
+                    progressDiv.style.display = 'none';
+                    fileInput.value = '';
+                    // The listener will update sidebar
+                }
+            );
+        }
+
+        // ========== PER-USER CARD DAILY LIMIT FUNCTIONS ==========
+        async function getCardUsageForToday(cardId, userId) {
+            const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+            const usageRef = db.collection('users').doc(userId).collection('card_usage').doc(cardId);
+            const doc = await usageRef.get();
+            if (!doc.exists) return { count: 0, lastUsedDate: '' };
+            const data = doc.data();
+            if (data.lastUsedDate !== today) {
+                // reset count
+                await usageRef.set({ count: 0, lastUsedDate: today });
+                return { count: 0, lastUsedDate: today };
+            }
+            return data;
+        }
+
+        async function incrementCardUsage(cardId, userId) {
+            const today = new Date().toISOString().split('T')[0];
+            const usageRef = db.collection('users').doc(userId).collection('card_usage').doc(cardId);
+            await db.runTransaction(async (transaction) => {
+                const doc = await transaction.get(usageRef);
+                if (!doc.exists) {
+                    transaction.set(usageRef, { count: 1, lastUsedDate: today });
+                } else {
+                    const data = doc.data();
+                    if (data.lastUsedDate !== today) {
+                        transaction.set(usageRef, { count: 1, lastUsedDate: today });
+                    } else {
+                        transaction.update(usageRef, { count: firebase.firestore.FieldValue.increment(1) });
+                    }
+                }
+            });
+        }
 
         // =============================================
 
@@ -4603,6 +4801,18 @@
                     document.getElementById('referral-link').value = baseUrl; // ← only baseUrl
                 }
             }
+
+            // Profile image
+            if (data.profileImageUrl) {
+                document.getElementById('sidebar-avatar-img').src = data.profileImageUrl;
+                document.getElementById('sidebar-avatar-img').style.display = 'block';
+                document.getElementById('sidebar-avatar-icon').style.display = 'none';
+                document.getElementById('profile-photo-img').src = data.profileImageUrl;
+            } else {
+                document.getElementById('sidebar-avatar-img').style.display = 'none';
+                document.getElementById('sidebar-avatar-icon').style.display = 'block';
+                document.getElementById('profile-photo-img').src = '';
+            }
             
             if (data.joinDate) {
                 let date;
@@ -4821,6 +5031,7 @@
                 
                 setupUserListener(userId);
                 setupAppConfigListener();
+                setupSidebarThemeListener(); // added
                 setupReferralSettingsListener();
                 setupPaymentMethodsListener();
                 setupVerificationMethodsListener();
@@ -5682,6 +5893,7 @@
                     if (userDoc.exists) {
                         setupUserListener(user.uid);
                         setupAppConfigListener();
+                        setupSidebarThemeListener(); // added
                         setupReferralSettingsListener();
                         setupPaymentMethodsListener();
                         setupVerificationMethodsListener();
@@ -5740,6 +5952,7 @@
                 
                 setupUserListener(userCredential.user.uid);
                 setupAppConfigListener();
+                setupSidebarThemeListener(); // added
                 setupReferralSettingsListener();
                 setupPaymentMethodsListener();
                 setupVerificationMethodsListener();
@@ -5914,6 +6127,7 @@
             const pages = {
                 'dashboard': 'dashboard-view',
                 'profile': 'profile-view',
+                'profile-photo-update': 'profile-photo-update-view',
                 'withdraw': 'withdraw-view',
                 'withdraw-processing': 'withdraw-processing-view',
                 'verify': 'verify-view',
@@ -6607,6 +6821,11 @@
                     appConfigListener = null;
                 }
                 
+                if (sidebarDesignListener) {
+                    sidebarDesignListener();
+                    sidebarDesignListener = null;
+                }
+                
                 if (referralSettingsListener) {
                     referralSettingsListener();
                     referralSettingsListener = null;
@@ -6733,22 +6952,7 @@
             }
         }
 
-        // ========== FREE JOB SYSTEM FUNCTIONS ==========
-        async function resetDailyLimitIfNeeded(projectId) {
-            const projectRef = db.collection('projects').doc(projectId);
-            const projectDoc = await projectRef.get();
-            if (!projectDoc.exists) return;
-            const project = projectDoc.data();
-            const todayDate = new Date().toDateString();
-            if (project.lastUsedDate !== todayDate) {
-                await projectRef.update({
-                    todayUsed: 0,
-                    lastUsedDate: todayDate
-                });
-                console.log(`✅ Daily limit reset for project ${projectId}`);
-            }
-        }
-
+        // ========== FREE JOB SYSTEM FUNCTIONS (UNLIMITED, WITH PER-USER CARD LIMIT) ==========
         function loadFreeJobProjects() {
             const container = document.getElementById('free-job-projects-container');
             container.innerHTML = '<div style="text-align: center; padding: 40px 20px; color: var(--text-light);"><i class="fa-solid fa-spinner fa-spin" style="font-size: 48px;"></i><p>Loading projects...</p></div>';
@@ -6758,9 +6962,7 @@
             freeJobProjectsListener = db.collection('projects')
                 .where('status', '==', 'active')
                 .orderBy('order', 'asc')
-                .onSnapshot(async (snapshot) => {
-                    const resetPromises = snapshot.docs.map(doc => resetDailyLimitIfNeeded(doc.id));
-                    await Promise.all(resetPromises);
+                .onSnapshot((snapshot) => {
                     renderFreeJobProjects(snapshot);
                 }, (error) => {
                     console.error('Error loading projects:', error);
@@ -6780,46 +6982,18 @@
                 const project = doc.data();
                 const projectId = doc.id;
 
-                const usedWorkPerDay = Number(project.usedWorkPerDay);
-                const todayUsed = Number(project.todayUsed || 0);
-
-                if (!usedWorkPerDay) {
-                    console.error('usedWorkPerDay missing for project:', projectId);
-                    return;
-                }
-
-                const remaining = Math.max(0, usedWorkPerDay - todayUsed);
-                const isLocked = todayUsed >= usedWorkPerDay;
-
-                let statusClass = '';
-                if (isLocked) {
-                    statusClass = 'free-job-project-locked';
-                } else if (project.status === 'coming') {
-                    statusClass = 'free-job-project-coming';
-                }
-
+                // No limit display anymore
                 html += `
-                    <div class="free-job-project-card ${statusClass}"
-                        ${isLocked ? '' : `onclick="selectProject('${projectId}', '${project.title}')"`}>
-
+                    <div class="free-job-project-card" onclick="selectProject('${projectId}', '${project.title}')">
+                        ${project.logoUrl ? `<img src="${project.logoUrl}" alt="logo" style="width: 100%; max-height: 120px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">` : ''}
                         <h3 style="font-size:18px; font-weight:700; margin-bottom:6px;">
                             ${project.title}
                         </h3>
-
                         <p style="font-size:13px; color:gray;">
                             ${project.description || ''}
                         </p>
-
                         <div style="display:flex; justify-content:space-between; margin-top:10px;">
-
-                            <span style="font-size:12px; font-weight:600; color:${isLocked ? 'red' : 'green'};">
-                                ⏳ Remaining Today: ${remaining}/${usedWorkPerDay}
-                            </span>
-
-                            <span style="font-size:12px; color:gray;">
-                                ${isLocked ? '❌ Daily Limit Finished' : '✅ Active'}
-                            </span>
-
+                            <span style="font-size:12px; font-weight:600; color:green;">✅ Unlimited</span>
                         </div>
                     </div>
                 `;
@@ -6829,21 +7003,6 @@
 
         async function selectProject(projectId, projectTitle) {
             try {
-                const projectDoc = await db.collection('projects').doc(projectId).get();
-                if (!projectDoc.exists) {
-                    showToast('❌ Project not found!', 'error');
-                    return;
-                }
-
-                const project = projectDoc.data();
-                const usedWorkPerDay = Number(project.usedWorkPerDay);
-                const todayUsed = Number(project.todayUsed || 0);
-
-                if (todayUsed >= usedWorkPerDay) {
-                    showToast('❌ Daily limit finished! Come back tomorrow.', 'warning');
-                    return;
-                }
-
                 selectedProjectId = projectId;
                 selectedProjectTitle = projectTitle;
                 navigateTo('free-job-cards');
@@ -6863,33 +7022,42 @@
                 .where('projectId', '==', projectId)
                 .where('status', '==', 'active')
                 .orderBy('order', 'asc')
-                .onSnapshot((snapshot) => {
-                    renderFreeJobCards(snapshot);
+                .onSnapshot(async (snapshot) => {
+                    // For each card, get user's daily usage
+                    const user = auth.currentUser;
+                    if (!user) return;
+                    const usagePromises = snapshot.docs.map(async doc => {
+                        const card = doc.data();
+                        const usage = await getCardUsageForToday(doc.id, user.uid);
+                        return { id: doc.id, ...card, usageCount: usage.count };
+                    });
+                    const cardsWithUsage = await Promise.all(usagePromises);
+                    renderFreeJobCards(cardsWithUsage);
                 }, (error) => {
                     console.error('Error loading cards:', error);
                     container.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--danger);"><i class="fa-solid fa-exclamation-circle" style="font-size: 48px;"></i><p>Error loading cards.</p></div>';
                 });
         }
 
-        function renderFreeJobCards(snapshot) {
+        function renderFreeJobCards(cards) {
             const container = document.getElementById('free-job-cards-container');
-            if (snapshot.empty) {
+            if (!cards || cards.length === 0) {
                 container.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-light);"><i class="fa-solid fa-inbox" style="font-size: 48px;"></i><p>No cards available in this project.</p></div>';
                 return;
             }
 
             let html = '';
-            snapshot.forEach(doc => {
-                const card = doc.data();
-                const cardId = doc.id;
-                const statusClass = card.status === 'locked' ? 'free-job-card-locked' : '';
+            cards.forEach(card => {
+                const isLocked = card.dailyUserLimit && card.usageCount >= card.dailyUserLimit;
+                const statusClass = isLocked ? 'free-job-card-locked' : '';
                 html += `
-                    <div class="free-job-card-item ${statusClass}" onclick="selectCard('${cardId}', '${card.title}')">
+                    <div class="free-job-card-item ${statusClass}" onclick="${isLocked ? '' : `selectCard('${card.id}', '${card.title}')`}">
                         <div style="display: flex; align-items: center; gap: 15px;">
                             <img src="${card.logoUrl || 'https://via.placeholder.com/50'}" alt="logo" style="width: 50px; height: 50px; border-radius: 10px; object-fit: cover;">
                             <div style="flex: 1;">
                                 <h4 style="font-size: 16px; font-weight: 700; color: var(--dark); margin-bottom: 4px;">${card.title}</h4>
                                 <p style="font-size: 13px; color: var(--success); font-weight: 600;">Reward: ৳${card.rewardAmount || 0}</p>
+                                ${card.dailyUserLimit ? `<p style="font-size: 12px; color: var(--text-light);">Today: ${card.usageCount}/${card.dailyUserLimit}</p>` : ''}
                             </div>
                             <button class="master-btn master-btn-primary master-btn-sm" style="width: auto; margin: 0;">${card.buttonText || 'View'}</button>
                         </div>
@@ -7144,19 +7312,19 @@
                 return;
             }
 
-            try {
-                const projectDoc = await db.collection('projects').doc(selectedProjectId).get();
-                if (projectDoc.exists) {
-                    const project = projectDoc.data();
-                    const usedWorkPerDay = Number(project.usedWorkPerDay);
-                    const todayUsed = Number(project.todayUsed || 0);
-                    if (todayUsed >= usedWorkPerDay) {
-                        showToast('❌ Daily limit finished! Cannot submit work.', 'warning');
+            // Check card daily limit for this user
+            const cardId = selectedCardId;
+            if (cardId) {
+                const usage = await getCardUsageForToday(cardId, user.uid);
+                // Fetch card details to get dailyUserLimit
+                const cardDoc = await db.collection('cards').doc(cardId).get();
+                if (cardDoc.exists) {
+                    const card = cardDoc.data();
+                    if (card.dailyUserLimit && usage.count >= card.dailyUserLimit) {
+                        showToast('❌ You have reached your daily limit for this card.', 'warning');
                         return;
                     }
                 }
-            } catch (error) {
-                console.error('Error checking project limit:', error);
             }
 
             const job = selectedJob;
@@ -7220,11 +7388,11 @@
             try {
                 await db.collection('job_submissions').add(submissionData);
 
-                const projectRef = db.collection('projects').doc(selectedProjectId);
-                await projectRef.update({
-                    todayUsed: firebase.firestore.FieldValue.increment(1)
-                });
-                
+                // Increment card usage for today
+                if (selectedCardId) {
+                    await incrementCardUsage(selectedCardId, user.uid);
+                }
+
                 showToast('Work proof submitted successfully! Status: Processing');
                 
                 // Navigate back to jobs page
@@ -7465,9 +7633,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('SmartPay Wallet loaded successfully!');
             console.log('✅ Full Firestore config integration – live colors & logo');
-            console.log('✅ Free Job System integrated – 100% Firestore driven');
+            console.log('✅ Free Job System integrated – 100% Firestore driven, unlimited projects, per-user daily card limits');
             console.log('✅ Job Submissions Page added – tracking system');
-            console.log('✅ Daily work limit implemented using usedWorkPerDay/todayUsed');
+            console.log('✅ Project limits removed (no todayUsed/usedWorkPerDay)');
             console.log('✅ Job Details text all bold');
             console.log('✅ Media slider with video support added');
             console.log('✅ Verify Now button hidden for verified users');
@@ -7479,6 +7647,8 @@
             console.log('✅ REFERRAL SYSTEM UPDATED: Link now shows only baseUrl, no auto-fill from URL');
             console.log('✅ NEW WALLETS ADDED: Gift Wallet, API Job Wallet, Spin Wallet');
             console.log('✅ COMING SOON PAGES: Gift, Facebook Sell, Instagram, Telegram, WhatsApp, API Job');
+            console.log('✅ SIDEBAR DYNAMIC COLORS from Firestore');
+            console.log('✅ PROFILE PHOTO UPLOAD with edit icon');
 
             // Add event listener for wallet dropdown
             const walletSelect = document.getElementById('withdraw-wallet-select');
